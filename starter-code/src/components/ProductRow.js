@@ -1,14 +1,34 @@
-import React from 'react';
+import React, {Component} from 'react';
 
-const ProductRow = ({ name, price, stocked }) => {
-  const style = !stocked ? { color: 'red' } : { color: 'black' };
+class ProductRow extends Component {
+  outStock = (item) => {
+    if (item.stocked === false) {
+      return {'color': 'red'};
+    }
+  }
 
-  return (
-    <tr>
-      <td style={style}>{name}</td>
-      <td>{price}</td>
-    </tr>
-  );
-};
-
+  render() {
+    const {products, searchQuery} = this.props;    
+    return (
+      <tbody>
+        {products.data.map(item => {
+          if (searchQuery === "") {
+            return <tr key={item.name}>
+            <td>{item.category}</td>
+            <td style={this.outStock(item)}>{item.name}</td>
+            <td>{item.price}</td>
+            </tr>
+          } else {
+            if (item.name.toLowerCase().includes(searchQuery.toLowerCase())) {
+              return <tr key={item.name}>
+              <td style={this.outStock(item)}>{item.name}</td>
+              <td>{item.price}</td>
+              </tr>
+            } 
+          }
+        })}
+      </tbody>
+    );
+  }
+}
 export default ProductRow;

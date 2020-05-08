@@ -1,39 +1,29 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import SearchBar from './SearchBar';
 import ProductTable from './ProductTable';
-import data from '../data.json';
 
-class FilterableProductTable extends Component{
+class FilterableProductTable extends Component {
 
-    state = {
-        search: "",
-        checkBox: false
-    }
+  state = {
+    search: "",
+    checkBox: false,
+  }
 
-    setQuery = search => {
-        this.setState({
-            search: search
-        })
-    }
+  filter = (searchQuery) => {
+    this.setState({
+      search: searchQuery,
+    })
+  }
 
-
-    
-render() {
+  render() {
     const {products} = this.props;
     return (
-        <div>
-            <h1>
-                IronStore
-            </h1>
-            <div><SearchBar></SearchBar></div>
-            <div><ProductTable products = {products} setQuery = {this.state.search} /></div>
-            
-        </div>
-    )
+      <div>
+        <h1>IronStore</h1>
+        <SearchBar filter={this.filter}/>
+        <ProductTable products={products} searchQuery={this.state.search}/>
+      </div>
+    );
+  }
 }
-
-}
-
-
-
 export default FilterableProductTable;

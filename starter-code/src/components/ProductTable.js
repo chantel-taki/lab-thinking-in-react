@@ -1,28 +1,23 @@
-import React from 'react';
+import React, {Component} from 'react';
 import ProductRow from './ProductRow';
 
-const ProductTable = ({ data, search, checkStock }) => {
-  return (
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Price</th>
-        </tr>
-      </thead>
-      <tbody>
-        {data
-          .filter((item) =>
-            checkStock
-              ? item.name.toLowerCase().includes(search) && item.stocked
-              : item.name.toLowerCase().includes(search)
-          )
-          .map((item, index) => (
-            <ProductRow key={index} {...item} />
-          ))}
-      </tbody>
-    </table>
-  );
-};
-
+class ProductTable extends Component {
+  render() {
+    const {products,searchQuery} = this.props;
+    return (
+      <div class="table">
+        <table >
+          <thead >
+            <tr>
+              <th>Category</th>
+              <th>Name</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+            <ProductRow products={products} searchQuery={searchQuery} />
+        </table>
+      </div>
+    );
+  }
+}
 export default ProductTable;
